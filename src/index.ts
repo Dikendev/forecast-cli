@@ -1,13 +1,14 @@
 #!/usr/bin/env node
 import minimist from "minimist";
 import { Help } from "./help";
+import { Version } from "./version";
 
 export const Options = {
+	today: "today",
 	help: "help",
 	version: "version",
+	forecast: "forecast",
 } as const;
-
-export type Options = typeof Options;
 
 export interface HelpOption {
 	help: string;
@@ -19,12 +20,13 @@ export interface VersionOption {
 	v: string;
 }
 
-export interface CommandLineOptions extends HelpOption, VersionOption {}
+export interface CommandLineOptions extends HelpOption, VersionOption {
+	today: string;
+}
 
 export type Commands = keyof typeof Options;
 
 (() => {
-	console.log("Hello CLI");
 	const args = minimist(process.argv.slice(2));
 	let cmd = (args._[0] as Commands) || Options.help;
 
@@ -39,11 +41,15 @@ export type Commands = keyof typeof Options;
 	}
 
 	switch (cmd) {
+		case Options.today:
+			console.log("Today is sunny!");
+			break;
 		case Options.help:
-			Help.showHelp();
+			console.log("Help menu", cast);
+			Help.menu(args);
 			break;
 		case Options.version:
-			console.log("Version executed");
+			Version.show();
 			break;
 		default:
 			console.error(`"${cmd}" is not a valid command!`);
