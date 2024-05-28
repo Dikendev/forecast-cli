@@ -1,12 +1,20 @@
 {
   "compilerOptions": {
+    "module": "CommonJS",
+    "target": "ES2020",
+    "lib": ["ES2022.String"],
     "rootDir": "src",
-    "outDir": "dist",
+    "outDir": "bin",
     "strict": true,
-    "target": "ES2022",
-    "module": "commonjs",
     "sourceMap": true,
     "esModuleInterop": true,
-    "moduleResolution": "node"
-  }
+    "baseUrl": ".",
+    "moduleResolution": "node",
+      "paths": {
+      "*": ["node_modules/*", "src/types/*"]
+    },
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+  },
+  "include": ["src/**/*"]
 } 
