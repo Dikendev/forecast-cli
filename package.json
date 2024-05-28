@@ -1,16 +1,38 @@
 {
-  "name": "forecast-cli",
+  "name": "forecast-cli-ts",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "bin/main.js",
   "bin": {
-    "forecast": "./dist/index.js"
+    "forecast": "bin/main.js"
   },
   "scripts": {
+    "start": "npm build && node ./bin/main.js",
     "build": "npx tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
+  "keywords": [
+    "cli",
+    "weather",
+    "forecast",
+    "typescript",
+    "node",
+    "axios",
+    "minimist",
+    "cli-spinners"
+  ],
   "author": "Diego Kennedy",
+  "contributors": [
+    "Diego Kennedy"
+  ],
+  "contributes": {
+    "type": "command",
+    "command": "forecast",
+    "description": "Get the weather forecast for a location"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Dikendev"
+  },
   "license": "ISC",
   "description": "",
   "devDependencies": {
@@ -20,7 +42,6 @@
   },
   "dependencies": {
     "axios": "^1.7.2",
-    "minimist": "^1.2.8",
-    "ora": "^8.0.1"
+    "minimist": "^1.2.8"
   }
 }
