@@ -1,8 +1,8 @@
-#!/usr/bin/env npx ts-node
+#!/usr/bin/env node
 import minimist from "minimist";
 import { Help } from "./help";
-import { Version } from "./version";
 import { Today } from "./cmds/today";
+import { version } from "./version";
 
 export const Options = {
 	today: "today",
@@ -52,7 +52,7 @@ export type Commands = keyof typeof Options;
 			Help.menu(args);
 			break;
 		case Options.version:
-			Version.show();
+			version();
 			break;
 		default:
 			console.error(`"${cmd}" is not a valid command!`);
