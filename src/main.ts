@@ -1,31 +1,10 @@
 #!/usr/bin/env node
 import minimist from "minimist";
 import { Help } from "./help";
-import { Today } from "./cmds/today";
+import { Today } from "./cmd/today";
 import { version } from "./version";
-
-export const Options = {
-	today: "today",
-	help: "help",
-	version: "version",
-	forecast: "forecast",
-} as const;
-
-export interface HelpOption {
-	help: string;
-	h: string;
-}
-
-export interface VersionOption {
-	version: string;
-	v: string;
-}
-
-export interface CommandLineOptions extends HelpOption, VersionOption {
-	today: string;
-}
-
-export type Commands = keyof typeof Options;
+import { Options } from "./interfaces/options.interface";
+import { Commands, CommandLineOptions } from "./interfaces/command.interface";
 
 (() => {
 	const args = minimist(process.argv.slice(2));
