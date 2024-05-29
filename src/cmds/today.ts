@@ -3,6 +3,7 @@ import { Weather } from "../service/weather";
 
 export class Today {
 	weather: Weather;
+
 	constructor() {
 		this.weather = new Weather();
 	}
