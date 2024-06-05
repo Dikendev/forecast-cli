@@ -109,9 +109,12 @@ export interface Values {
 	windSpeedMin: number;
 }
 
-export interface Location {
-	lat: number;
-	lon: number;
+export interface Location extends LocationCoordinates {
 	name: string;
 	type: string;
+}
+
+export interface LocationCoordinates {
+	lat: number;
+	lon: number;
 }
