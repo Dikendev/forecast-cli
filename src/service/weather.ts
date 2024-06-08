@@ -1,24 +1,8 @@
 import axios from "axios";
 import { WeatherResponse } from "./interfaces/weather.interface";
-
-// export const COORDINATES = {
-// 	"jaragua do sul": {
-// 		latitude: -26.4853,
-// 		longitude: -49.0672,
-// 	},
-// } as const;
-
-export interface Metrics {
-	standard: string;
-	metric: string;
-	imperial: string;
-}
-
-export const METRICS: Metrics = {
-	standard: "standard",
-	metric: "metric",
-	imperial: "imperial",
-} as const;
+import dotenv from "dotenv";
+import { METRICS } from "../constants/metrics.constant";
+dotenv.config();
 
 export class WeatherParams {
 	constructor(
@@ -35,15 +19,13 @@ export class Weather {
 		// const url = `https://api.tomorrow.io/v4/weather/forecast?location=${coordinates}&apikey=WezdiiKDlXT2ceg1POgROArCJfJKgT0F`;
 
 		const coordinates = new WeatherParams(-26.4853, -49.0672, METRICS.metric);
-		console.log("coordinates", coordinates);
 
 		const params = getParams(coordinates);
-		console.log("params", params);
 
 		const token = process.env.OPEN_WEATHER_TOKEN;
-		console.log("token", token);
+		const openweatherMapApi = process.env.OPEN_WEATHER_API;
 
-		const url = `https:api.openweathermap.org/data/2.5/weather?${params}&appid=${token}`;
+		const url = `${openweatherMapApi}/data/2.5/weather?${params}&appid=${token}`;
 
 		try {
 			const result = await axios.get<WeatherResponse>(url);
