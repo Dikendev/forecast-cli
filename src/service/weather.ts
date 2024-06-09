@@ -1,31 +1,64 @@
 import axios from "axios";
 import { WeatherResponse } from "./interfaces/weather.interface";
+import { METRICS, MetricsType } from "../constants/metrics.constant";
 import dotenv from "dotenv";
-import { METRICS } from "../constants/metrics.constant";
 dotenv.config();
 
 export class WeatherParams {
 	constructor(
 		public readonly lat: number,
 		public readonly lon: number,
-		public readonly units: string
+		public readonly units: MetricsType
 	) {}
 }
 
 export class Weather {
-	constructor() {}
+	token!: string;
+	openweatherMapApi!: string;
 
-	async getWeather(): Promise<WeatherResponse> {
+	constructor() {
+		this.setToken();
+		this.setApi();
+	}
+
+	async setApi(): Promise<void> {
+		const openWeatherMapApi = process.env.OPEN_WEATHER_API;
+
+		if (!openWeatherMapApi) {
+			this.logTokenNotFound();
+			return;
+		}
+
+		this.openweatherMapApi = openWeatherMapApi;
+	}
+
+	async setToken(): Promise<void> {
+		const token = process.env.OPEN_WEATHER_TOKEN;
+
+		if (!token) {
+			this.logTokenNotFound();
+			return;
+		}
+
+		this.token = token;
+	}
+
+	logTokenNotFound() {
+		console.log("Token not found");
+	}
+
+	async getWeather(
+		lat: number,
+		long: number,
+		metrics: MetricsType
+	): Promise<WeatherResponse> {
 		// const url = `https://api.tomorrow.io/v4/weather/forecast?location=${coordinates}&apikey=WezdiiKDlXT2ceg1POgROArCJfJKgT0F`;
 
-		const coordinates = new WeatherParams(-26.4853, -49.0672, METRICS.metric);
+		const coordinates = new WeatherParams(lat, long, metrics);
 
 		const params = getParams(coordinates);
 
-		const token = process.env.OPEN_WEATHER_TOKEN;
-		const openweatherMapApi = process.env.OPEN_WEATHER_API;
-
-		const url = `${openweatherMapApi}/data/2.5/weather?${params}&appid=${token}`;
+		const url = `${this.openweatherMapApi}/data/2.5/weather?${params}&appid=${this.token}`;
 
 		try {
 			const result = await axios.get<WeatherResponse>(url);
@@ -36,7 +69,6 @@ export class Weather {
 
 			return result.data;
 		} catch (error) {
-			console.error("Error fetching weather data", error);
 			throw error;
 		}
 	}
