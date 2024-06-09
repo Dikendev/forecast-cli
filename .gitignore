@@ -14,3 +14,6 @@ logs
 
 # Coverage directory 
 coverage
+
+.env
+.DS_Store
