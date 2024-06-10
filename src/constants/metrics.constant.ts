@@ -1,9 +1,9 @@
-import { Metrics } from "../interfaces/metrics.interface";
+import { MetricsType } from "../interfaces/metrics.interface";
 
-export const METRICS: Metrics = {
+export const METRICS: MetricsType = {
 	standard: "standard",
 	metric: "metric",
 	imperial: "imperial",
-} as const;
+};
 
-export type MetricsType = keyof typeof METRICS;
+export type Metrics = keyof typeof METRICS;
