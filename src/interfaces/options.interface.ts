@@ -2,6 +2,7 @@ export const Options = {
 	today: "today",
 	help: "help",
 	version: "version",
+	state: "state",
 	forecast: "forecast",
 } as const;
 
